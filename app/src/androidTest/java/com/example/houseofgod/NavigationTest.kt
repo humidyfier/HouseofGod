@@ -34,7 +34,7 @@ class NavigationTest {
         // Navigate to Bible
         composeTestRule.onNodeWithText("Bible").performClick()
         composeTestRule.waitForIdle()
-        composeTestRule.onNodeWithText("Bible Screen").assertIsDisplayed()
+        composeTestRule.onNodeWithText("John 3 (KJV / BSI)").assertIsDisplayed()
 
         // Navigate to Media
         composeTestRule.onNodeWithText("Media").performClick()
@@ -44,12 +44,12 @@ class NavigationTest {
         // Navigate to Prayer
         composeTestRule.onNodeWithText("Prayer").performClick()
         composeTestRule.waitForIdle()
-        composeTestRule.onNodeWithText("Prayer Screen").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Prayer Requests").assertIsDisplayed()
 
         // Navigate to Profile
         composeTestRule.onNodeWithText("Profile").performClick()
         composeTestRule.waitForIdle()
-        composeTestRule.onNodeWithText("Profile Screen").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Church Details & Gatherings").assertIsDisplayed()
 
         // Navigate back to Home
         composeTestRule.onNodeWithText("Home").performClick()

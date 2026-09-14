@@ -27,7 +27,7 @@ enum class TopLevelRoute(
     BIBLE(
         route = "bible",
         title = "Bible",
-        icon = Icons.Default.MenuBook
+        icon = MenuBookIcon
     ),
     MEDIA(
         route = "media",
@@ -57,14 +57,14 @@ enum class TopLevelRoute(
 /**
  * Material menu_book ImageVector definition (standard 24x24dp Material design vector).
  */
-private var _menuBook: ImageVector? = null
+private var cachedMenuBook: ImageVector? = null
 
-val Icons.Default.MenuBook: ImageVector
+val MenuBookIcon: ImageVector
     get() {
-        if (_menuBook != null) {
-            return _menuBook!!
+        if (cachedMenuBook != null) {
+            return cachedMenuBook!!
         }
-        _menuBook = ImageVector.Builder(
+        cachedMenuBook = ImageVector.Builder(
             name = "Filled.MenuBook",
             defaultWidth = 24.dp,
             defaultHeight = 24.dp,
@@ -99,5 +99,5 @@ val Icons.Default.MenuBook: ImageVector
                 close()
             }
         }.build()
-        return _menuBook!!
+        return cachedMenuBook!!
     }

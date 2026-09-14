@@ -9,7 +9,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import com.example.houseofgod.feature.bible.BibleScreen
 import com.example.houseofgod.feature.home.HomeScreen
+import com.example.houseofgod.feature.media.MediaScreen
+import com.example.houseofgod.feature.prayer.PrayerScreen
+import com.example.houseofgod.feature.profile.ProfileScreen
 
 /**
  * Main application NavHost coordinating top-level navigation across the 5 core tabs.
@@ -36,68 +41,18 @@ fun AppNavHost(
             )
         }
         composable(route = TopLevelRoute.BIBLE.route) {
-            BibleScreenPlaceholder(modifier = Modifier.fillMaxSize())
+            BibleScreen(modifier = Modifier.fillMaxSize())
         }
         composable(route = TopLevelRoute.MEDIA.route) {
-            com.example.houseofgod.feature.media.MediaScreen(modifier = Modifier.fillMaxSize())
+            MediaScreen(modifier = Modifier.fillMaxSize())
         }
         composable(route = TopLevelRoute.PRAYER.route) {
-            PrayerScreenPlaceholder(modifier = Modifier.fillMaxSize())
+            PrayerScreen(modifier = Modifier.fillMaxSize())
         }
         composable(route = TopLevelRoute.PROFILE.route) {
-            ProfileScreenPlaceholder(modifier = Modifier.fillMaxSize())
+            ProfileScreen(modifier = Modifier.fillMaxSize())
         }
     }
-}
-
-@Composable
-fun HomeScreenPlaceholder(
-    modifier: Modifier = Modifier
-) {
-    ScreenPlaceholder(
-        title = "Home Screen",
-        modifier = modifier
-    )
-}
-
-@Composable
-fun BibleScreenPlaceholder(
-    modifier: Modifier = Modifier
-) {
-    ScreenPlaceholder(
-        title = "Bible Screen",
-        modifier = modifier
-    )
-}
-
-@Composable
-fun MediaScreenPlaceholder(
-    modifier: Modifier = Modifier
-) {
-    ScreenPlaceholder(
-        title = "Media Screen",
-        modifier = modifier
-    )
-}
-
-@Composable
-fun PrayerScreenPlaceholder(
-    modifier: Modifier = Modifier
-) {
-    ScreenPlaceholder(
-        title = "Prayer Screen",
-        modifier = modifier
-    )
-}
-
-@Composable
-fun ProfileScreenPlaceholder(
-    modifier: Modifier = Modifier
-) {
-    ScreenPlaceholder(
-        title = "Profile Screen",
-        modifier = modifier
-    )
 }
 
 @Composable
