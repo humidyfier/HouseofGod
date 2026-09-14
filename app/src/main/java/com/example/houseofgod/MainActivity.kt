@@ -16,16 +16,20 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -145,6 +149,10 @@ fun FloatingGlassBottomBar(
 ) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
+    val routes = TopLevelRoute.entries
+    val selectedIndex = routes.indexOfFirst { topLevelRoute ->
+        currentDestination?.hierarchy?.any { it.route == topLevelRoute.route } == true
+    }.coerceAtLeast(0)
 
     Box(
         modifier = modifier
@@ -163,29 +171,66 @@ fun FloatingGlassBottomBar(
             shadowElevation = 20.dp,
             modifier = Modifier.fillMaxWidth()
         ) {
-            Row(
+            BoxWithConstraints(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 8.dp, vertical = 8.dp),
-                horizontalArrangement = Arrangement.SpaceEvenly,
-                verticalAlignment = Alignment.CenterVertically
+                    .height(58.dp)
+                    .padding(horizontal = 8.dp, vertical = 6.dp)
             ) {
-                TopLevelRoute.entries.forEach { topLevelRoute ->
-                    val isSelected = currentDestination?.hierarchy?.any { it.route == topLevelRoute.route } == true
+                val tabCount = routes.size
+                val tabWidth = maxWidth / tabCount
+                val pillWidth = tabWidth * 1.10f // Elongated 10% horizontally
+                val pillHorizontalOffset = (pillWidth - tabWidth) / 2f
 
-                    FloatingBarItem(
-                        route = topLevelRoute,
-                        isSelected = isSelected,
-                        onClick = {
-                            navController.navigate(topLevelRoute.route) {
-                                popUpTo(navController.graph.findStartDestination().id) {
-                                    saveState = true
+                // Smooth and noticeable sliding transition across sections (420ms)
+                val animatedIndex by animateFloatAsState(
+                    targetValue = selectedIndex.toFloat(),
+                    animationSpec = tween(
+                        durationMillis = 420,
+                        easing = FastOutSlowInEasing
+                    ),
+                    label = "SlidingYellowPillIndicator"
+                )
+
+                // 1. Sliding yellow button with rounded edges (pill shape), elongated 10% horizontally
+                Box(
+                    modifier = Modifier
+                        .offset(x = (tabWidth * animatedIndex) - pillHorizontalOffset)
+                        .width(pillWidth)
+                        .fillMaxHeight()
+                        .background(
+                            color = RadiantGold.copy(alpha = 0.20f),
+                            shape = RoundedCornerShape(50)
+                        )
+                        .border(
+                            border = BorderStroke(1.dp, RadiantGold.copy(alpha = 0.45f)),
+                            shape = RoundedCornerShape(50)
+                        )
+                )
+
+                // 2. Tab Items Row placed on top of the sliding indicator
+                Row(
+                    modifier = Modifier.fillMaxSize(),
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    routes.forEachIndexed { index, topLevelRoute ->
+                        val isSelected = index == selectedIndex
+
+                        FloatingBarItem(
+                            route = topLevelRoute,
+                            isSelected = isSelected,
+                            onClick = {
+                                navController.navigate(topLevelRoute.route) {
+                                    popUpTo(navController.graph.findStartDestination().id) {
+                                        saveState = true
+                                    }
+                                    launchSingleTop = true
+                                    restoreState = true
                                 }
-                                launchSingleTop = true
-                                restoreState = true
                             }
-                        }
-                    )
+                        )
+                    }
                 }
             }
         }
@@ -205,33 +250,16 @@ fun RowScope.FloatingBarItem(
         label = "BarItemColor"
     )
 
-    val pillBackground = if (isSelected) {
-        RadiantGold.copy(alpha = 0.20f)
-    } else {
-        Color.Transparent
-    }
-
-    val pillBorder = if (isSelected) {
-        BorderStroke(1.dp, RadiantGold.copy(alpha = 0.45f))
-    } else {
-        null
-    }
-
     Box(
         modifier = modifier
             .weight(1f)
+            .fillMaxHeight()
             .clip(RoundedCornerShape(50))
             .clickable(
                 onClick = onClick,
                 interactionSource = remember { MutableInteractionSource() },
                 indication = null
-            )
-            .background(pillBackground, shape = RoundedCornerShape(50))
-            .then(
-                if (pillBorder != null) Modifier.border(pillBorder, shape = RoundedCornerShape(50))
-                else Modifier
-            )
-            .padding(vertical = 10.dp),
+            ),
         contentAlignment = Alignment.Center
     ) {
         Column(
