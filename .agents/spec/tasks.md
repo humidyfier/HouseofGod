@@ -1,7 +1,7 @@
 # Phase 0: Static Compose Prototype (tasks.md)
 
 ## Task 1: Navigation Skeleton & Scaffold
-**Status:** TODO
+**Status:** DONE
 **Instructions for Agent:**
 1. Read `wiki/architecture.md` and `.agents/skills/UI/compose-navigation/SKILL.md`.
 2. Create `core/navigation/TopLevelRoute.kt` defining the 5 main routes (Home, Bible, Media, Prayer, Profile) with their corresponding Material Icons.
