@@ -1,7 +1,7 @@
 # Phase 0: Static Compose Prototype (tasks.md)
 
 ## Task 1: Navigation Skeleton & Scaffold
-**Status:** TODO
+**Status:** DONE
 **Instructions for Agent:**
 1. Read `wiki/architecture.md` and `.agents/skills/UI/compose-navigation/SKILL.md`.
 2. Create `core/navigation/TopLevelRoute.kt` defining the 5 main routes (Home, Bible, Media, Prayer, Profile) with their corresponding Material Icons.
@@ -10,7 +10,7 @@
 5. Yield to human for build verification.
 
 ## Task 2: Core Design System
-**Status:** TODO
+**Status:** DONE
 **Instructions for Agent:**
 1. Read `spec/requirement.md` to review the visual brand (dark-first, premium, Tamil support).
 2. Modify `core/designsystem/Color.kt` to establish a deep, dark-first color palette (dark backgrounds, subtle surface colors, readable primary accents).
