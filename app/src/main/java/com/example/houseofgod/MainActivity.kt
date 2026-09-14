@@ -64,6 +64,7 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.houseofgod.core.designsystem.GrainientBackground
 import com.example.houseofgod.core.designsystem.HouseOfGodTheme
 import com.example.houseofgod.core.designsystem.RadiantGold
 import com.example.houseofgod.core.designsystem.TextMediumContrast
@@ -120,24 +121,53 @@ fun MainAppScaffold(
         label = "BottomBarTranslationY"
     )
 
-    Scaffold(
-        modifier = modifier
-            .fillMaxSize()
-            .nestedScroll(nestedScrollConnection),
-        containerColor = Color.Transparent,
-        bottomBar = {
-            FloatingGlassBottomBar(
-                navController = navController,
-                translationY = translationY
-            )
-        }
-    ) { innerPadding ->
-        AppNavHost(
-            navController = navController,
+    Box(modifier = modifier.fillMaxSize()) {
+        // Continuous, shared React Bits Grainient motion graphics background for all tab sections
+        GrainientBackground(
+            modifier = Modifier.fillMaxSize(),
+            color1 = Color(0xFFA362A1),
+            color2 = Color(0xFF9885E6),
+            color3 = Color(0xFFC19DE3),
+            timeSpeed = 1.0f,
+            colorBalance = 0.1f,
+            warpStrength = 1.0f,
+            warpFrequency = 5.0f,
+            warpSpeed = 2.0f,
+            warpAmplitude = 50.0f,
+            blendAngle = 0.0f,
+            blendSoftness = 0.05f,
+            rotationAmount = 500.0f,
+            noiseScale = 2.0f,
+            grainAmount = 0.1f,
+            grainScale = 2.0f,
+            grainAnimated = false,
+            contrast = 1.5f,
+            gamma = 1.0f,
+            saturation = 1.0f,
+            centerX = -0.09f,
+            centerY = 0.0f,
+            zoom = 0.9f
+        )
+
+        Scaffold(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(top = innerPadding.calculateTopPadding())
-        )
+                .nestedScroll(nestedScrollConnection),
+            containerColor = Color.Transparent,
+            bottomBar = {
+                FloatingGlassBottomBar(
+                    navController = navController,
+                    translationY = translationY
+                )
+            }
+        ) { innerPadding ->
+            AppNavHost(
+                navController = navController,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(top = innerPadding.calculateTopPadding())
+            )
+        }
     }
 }
 

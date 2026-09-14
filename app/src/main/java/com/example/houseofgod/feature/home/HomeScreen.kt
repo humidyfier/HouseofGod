@@ -40,15 +40,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import androidx.compose.animation.core.LinearEasing
-import androidx.compose.animation.core.RepeatMode
-import androidx.compose.animation.core.animateFloat
-import androidx.compose.animation.core.infiniteRepeatable
-import androidx.compose.animation.core.rememberInfiniteTransition
-import androidx.compose.animation.core.tween
-import androidx.compose.runtime.getValue
-import androidx.compose.ui.draw.drawBehind
-import androidx.compose.ui.geometry.Offset
 import com.example.houseofgod.core.designsystem.DarkElevatedSurface
 import com.example.houseofgod.core.designsystem.DarkSurfaceVariant
 import com.example.houseofgod.core.designsystem.RadiantGold
@@ -71,47 +62,8 @@ fun HomeScreen(
     onReflectionClick: () -> Unit = {},
     onEventClick: () -> Unit = {}
 ) {
-    // Subtle, slow animated motion background (6500ms - 8000ms duration for calm devotional feel)
-    val infiniteTransition = rememberInfiniteTransition(label = "HomeAmbientMotion")
-
-    val animatedCenterX by infiniteTransition.animateFloat(
-        initialValue = 0.2f,
-        targetValue = 0.8f,
-        animationSpec = infiniteRepeatable(
-            animation = tween(durationMillis = 6500, easing = LinearEasing),
-            repeatMode = RepeatMode.Reverse
-        ),
-        label = "AmbientMotionCenterX"
-    )
-
-    val animatedCenterY by infiniteTransition.animateFloat(
-        initialValue = 0.15f,
-        targetValue = 0.75f,
-        animationSpec = infiniteRepeatable(
-            animation = tween(durationMillis = 8000, easing = LinearEasing),
-            repeatMode = RepeatMode.Reverse
-        ),
-        label = "AmbientMotionCenterY"
-    )
-
     Box(
-        modifier = modifier
-            .fillMaxSize()
-            .drawBehind {
-                val ambientRadialGradient = Brush.radialGradient(
-                    colors = listOf(
-                        Color(0xFF142236).copy(alpha = 0.75f), // Soft blurry sanctuary night blue
-                        Color(0xFF0F1622).copy(alpha = 0.40f), // Smooth twilight transition
-                        Color(0xFF0A0C10)                      // Deep, calm near-black baseline
-                    ),
-                    center = Offset(
-                        x = size.width * animatedCenterX,
-                        y = size.height * animatedCenterY
-                    ),
-                    radius = maxOf(size.width, size.height) * 0.85f
-                )
-                drawRect(brush = ambientRadialGradient)
-            }
+        modifier = modifier.fillMaxSize()
     ) {
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
