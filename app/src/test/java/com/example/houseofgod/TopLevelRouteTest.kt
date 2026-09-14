@@ -4,6 +4,7 @@ import com.example.houseofgod.core.navigation.TopLevelRoute
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
+import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class TopLevelRouteTest {
@@ -35,6 +36,7 @@ class TopLevelRouteTest {
     fun verifyIconsAndTitlesConfigured() {
         TopLevelRoute.entries.forEach { route ->
             assertNotNull(route.icon)
+            assertTrue(route.iconResId != 0)
             assertNotNull(route.title)
             assertNotNull(route.route)
         }

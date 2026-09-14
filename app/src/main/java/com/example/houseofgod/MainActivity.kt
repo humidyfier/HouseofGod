@@ -55,6 +55,7 @@ import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -169,7 +170,7 @@ fun FloatingGlassBottomBar(
     ) {
         Surface(
             shape = RoundedCornerShape(50),
-            color = Color(0xFF10131B).copy(alpha = 0.96f), // High opacity (96%) dark glass to prevent background bleed-through
+            color = Color(0xFF10131B).copy(alpha = 0.90f), // Opacity reduced by 6 units (from 96% to 90%) for refined glass translucency
             border = BorderStroke(1.dp, Color.White.copy(alpha = 0.12f)), // Crisp glass refraction rim
             shadowElevation = 20.dp,
             modifier = Modifier.fillMaxWidth()
@@ -293,34 +294,17 @@ fun RowScope.FloatingBarItem(
             ),
         contentAlignment = Alignment.Center
     ) {
-        Column(
-            modifier = Modifier.graphicsLayer {
-                scaleX = magnifierScale
-                scaleY = magnifierScale
-            },
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-            Icon(
-                imageVector = route.icon,
-                contentDescription = route.title,
-                tint = itemColor,
-                modifier = Modifier.size(22.dp)
-            )
-
-            Spacer(modifier = Modifier.height(3.dp))
-
-            Text(
-                text = route.title,
-                style = MaterialTheme.typography.labelSmall.copy(
-                    fontSize = 10.sp,
-                    fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
-                    letterSpacing = 0.3.sp
-                ),
-                color = itemColor,
-                maxLines = 1
-            )
-        }
+        Icon(
+            painter = painterResource(id = route.iconResId),
+            contentDescription = route.title,
+            tint = itemColor,
+            modifier = Modifier
+                .graphicsLayer {
+                    scaleX = magnifierScale
+                    scaleY = magnifierScale
+                }
+                .size(26.dp)
+        )
     }
 }
 

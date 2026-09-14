@@ -12,37 +12,46 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 
+import androidx.annotation.DrawableRes
+import com.example.houseofgod.R
+
 /**
  * Top-level destinations representing the primary navigation items in the bottom navigation bar.
  */
 enum class TopLevelRoute(
     val route: String,
     val title: String,
+    @get:DrawableRes val iconResId: Int,
     val icon: ImageVector
 ) {
     HOME(
         route = "home",
         title = "Home",
+        iconResId = R.drawable.ic_tab_home,
         icon = Icons.Default.Home
     ),
     BIBLE(
         route = "bible",
         title = "Bible",
+        iconResId = R.drawable.ic_tab_bible,
         icon = MenuBookIcon
     ),
     MEDIA(
         route = "media",
         title = "Media",
+        iconResId = R.drawable.ic_tab_media,
         icon = Icons.Default.PlayArrow
     ),
     PRAYER(
         route = "prayer",
         title = "Prayer",
+        iconResId = R.drawable.ic_tab_prayer,
         icon = Icons.Default.Favorite
     ),
     PROFILE(
         route = "profile",
         title = "Profile",
+        iconResId = R.drawable.ic_tab_profile,
         icon = Icons.Default.Person
     );
 
