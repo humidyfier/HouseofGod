@@ -58,7 +58,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.houseofgod.core.designsystem.HouseOfGodTheme
 import com.example.houseofgod.core.designsystem.RadiantGold
-import com.example.houseofgod.core.designsystem.TextSubtle
+import com.example.houseofgod.core.designsystem.TextMediumContrast
 import com.example.houseofgod.core.navigation.AppNavHost
 import com.example.houseofgod.core.navigation.TopLevelRoute
 
@@ -158,9 +158,9 @@ fun FloatingGlassBottomBar(
     ) {
         Surface(
             shape = RoundedCornerShape(50),
-            color = Color(0xFF13161F).copy(alpha = 0.82f), // Translucent dark liquid glass
-            border = BorderStroke(1.dp, Color.White.copy(alpha = 0.08f)), // Subtle glass refraction rim
-            shadowElevation = 16.dp,
+            color = Color(0xFF10131B).copy(alpha = 0.96f), // High opacity (96%) dark glass to prevent background bleed-through
+            border = BorderStroke(1.dp, Color.White.copy(alpha = 0.12f)), // Crisp glass refraction rim
+            shadowElevation = 20.dp,
             modifier = Modifier.fillMaxWidth()
         ) {
             Row(
@@ -200,19 +200,19 @@ fun RowScope.FloatingBarItem(
     modifier: Modifier = Modifier
 ) {
     val animatedColor by animateColorAsState(
-        targetValue = if (isSelected) RadiantGold else TextSubtle,
+        targetValue = if (isSelected) RadiantGold else TextMediumContrast,
         animationSpec = tween(300),
         label = "BarItemColor"
     )
 
     val pillBackground = if (isSelected) {
-        RadiantGold.copy(alpha = 0.16f)
+        RadiantGold.copy(alpha = 0.20f)
     } else {
         Color.Transparent
     }
 
     val pillBorder = if (isSelected) {
-        BorderStroke(1.dp, RadiantGold.copy(alpha = 0.35f))
+        BorderStroke(1.dp, RadiantGold.copy(alpha = 0.45f))
     } else {
         null
     }
