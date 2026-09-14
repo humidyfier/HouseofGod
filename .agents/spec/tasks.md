@@ -10,7 +10,7 @@
 5. Yield to human for build verification.
 
 ## Task 2: Core Design System
-**Status:** TODO
+**Status:** DONE
 **Instructions for Agent:**
 1. Read `spec/requirement.md` to review the visual brand (dark-first, premium, Tamil support).
 2. Modify `core/designsystem/Color.kt` to establish a deep, dark-first color palette (dark backgrounds, subtle surface colors, readable primary accents).
