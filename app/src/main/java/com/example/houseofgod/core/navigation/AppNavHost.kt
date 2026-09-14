@@ -39,7 +39,7 @@ fun AppNavHost(
             BibleScreenPlaceholder(modifier = Modifier.fillMaxSize())
         }
         composable(route = TopLevelRoute.MEDIA.route) {
-            MediaScreenPlaceholder(modifier = Modifier.fillMaxSize())
+            com.example.houseofgod.feature.media.MediaScreen(modifier = Modifier.fillMaxSize())
         }
         composable(route = TopLevelRoute.PRAYER.route) {
             PrayerScreenPlaceholder(modifier = Modifier.fillMaxSize())

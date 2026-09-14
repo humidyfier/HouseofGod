@@ -28,7 +28,7 @@
 5. Yield to human for build verification.
 
 ## Task 4: Media Feature Skeleton
-**Status:** TODO
+**Status:** DONE
 **Instructions for Agent:**
 1. Create `feature/media/MediaScreen.kt`.
 2. Implement a top-level `TabRow` for two segments: [ Sermons ] and [ Music ].

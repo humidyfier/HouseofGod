@@ -39,7 +39,7 @@ class NavigationTest {
         // Navigate to Media
         composeTestRule.onNodeWithText("Media").performClick()
         composeTestRule.waitForIdle()
-        composeTestRule.onNodeWithText("Media Screen").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Watch & Listen").assertIsDisplayed()
 
         // Navigate to Prayer
         composeTestRule.onNodeWithText("Prayer").performClick()
