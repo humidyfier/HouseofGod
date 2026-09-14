@@ -7,9 +7,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.FastOutSlowInEasing
-import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -18,20 +16,16 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -47,9 +41,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
@@ -153,10 +145,6 @@ fun FloatingGlassBottomBar(
 ) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
-    val routes = TopLevelRoute.entries
-    val selectedIndex = routes.indexOfFirst { topLevelRoute ->
-        currentDestination?.hierarchy?.any { it.route == topLevelRoute.route } == true
-    }.coerceAtLeast(0)
 
     Box(
         modifier = modifier
@@ -175,102 +163,29 @@ fun FloatingGlassBottomBar(
             shadowElevation = 20.dp,
             modifier = Modifier.fillMaxWidth()
         ) {
-            BoxWithConstraints(
+            Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(64.dp)
-                    .padding(horizontal = 8.dp, vertical = 6.dp)
+                    .padding(horizontal = 8.dp, vertical = 8.dp),
+                horizontalArrangement = Arrangement.SpaceEvenly,
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                val tabCount = routes.size
-                val tabWidth = maxWidth / tabCount
-                val indicatorShape = RoundedCornerShape(14.dp)
+                TopLevelRoute.entries.forEach { topLevelRoute ->
+                    val isSelected = currentDestination?.hierarchy?.any { it.route == topLevelRoute.route } == true
 
-                val animatedIndex by animateFloatAsState(
-                    targetValue = selectedIndex.toFloat(),
-                    animationSpec = spring(
-                        dampingRatio = 0.74f,
-                        stiffness = Spring.StiffnessMediumLow
-                    ),
-                    label = "SlidingLiquidGlassIndicator"
-                )
-
-                // 1. Sliding 3D Liquid Glass Rounded-Rectangle Indicator
-                Box(
-                    modifier = Modifier
-                        .offset(x = tabWidth * animatedIndex)
-                        .width(tabWidth)
-                        .fillMaxHeight()
-                        .padding(horizontal = 3.dp, vertical = 2.dp)
-                        .shadow(
-                            elevation = 8.dp,
-                            shape = indicatorShape,
-                            ambientColor = RadiantGold.copy(alpha = 0.40f),
-                            spotColor = RadiantGold.copy(alpha = 0.60f)
-                        )
-                        .background(
-                            brush = Brush.verticalGradient(
-                                colors = listOf(
-                                    Color.White.copy(alpha = 0.35f),       // 3D Top ambient light catch
-                                    RadiantGold.copy(alpha = 0.36f),        // Luminous warm radiant gold
-                                    RadiantGold.copy(alpha = 0.20f),        // Translucent liquid depth
-                                    Color(0xFF6E4C07).copy(alpha = 0.18f)   // Bottom refraction 3D depth
-                                )
-                            ),
-                            shape = indicatorShape
-                        )
-                        .border(
-                            width = 1.dp,
-                            brush = Brush.verticalGradient(
-                                colors = listOf(
-                                    Color.White.copy(alpha = 0.80f),        // 3D Upper bevel specular glint
-                                    RadiantGold.copy(alpha = 0.60f),        // Mid gold curvature refraction
-                                    RadiantGold.copy(alpha = 0.25f)         // Lower rim shadow
-                                )
-                            ),
-                            shape = indicatorShape
-                        )
-                ) {
-                    // Specular 3D convex glass sheen overlay on the upper curve
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .fillMaxHeight(0.48f)
-                            .background(
-                                brush = Brush.verticalGradient(
-                                    colors = listOf(
-                                        Color.White.copy(alpha = 0.26f),
-                                        Color.White.copy(alpha = 0.05f),
-                                        Color.Transparent
-                                    )
-                                ),
-                                shape = RoundedCornerShape(topStart = 14.dp, topEnd = 14.dp)
-                            )
-                    )
-                }
-
-                // 2. Tab Items Row placed on top of the sliding indicator
-                Row(
-                    modifier = Modifier.fillMaxSize(),
-                    horizontalArrangement = Arrangement.SpaceEvenly,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    routes.forEachIndexed { index, topLevelRoute ->
-                        val isSelected = index == selectedIndex
-
-                        FloatingBarItem(
-                            route = topLevelRoute,
-                            isSelected = isSelected,
-                            onClick = {
-                                navController.navigate(topLevelRoute.route) {
-                                    popUpTo(navController.graph.findStartDestination().id) {
-                                        saveState = true
-                                    }
-                                    launchSingleTop = true
-                                    restoreState = true
+                    FloatingBarItem(
+                        route = topLevelRoute,
+                        isSelected = isSelected,
+                        onClick = {
+                            navController.navigate(topLevelRoute.route) {
+                                popUpTo(navController.graph.findStartDestination().id) {
+                                    saveState = true
                                 }
+                                launchSingleTop = true
+                                restoreState = true
                             }
-                        )
-                    }
+                        }
+                    )
                 }
             }
         }
@@ -286,20 +201,37 @@ fun RowScope.FloatingBarItem(
 ) {
     val animatedColor by animateColorAsState(
         targetValue = if (isSelected) RadiantGold else TextMediumContrast,
-        animationSpec = tween(250),
+        animationSpec = tween(300),
         label = "BarItemColor"
     )
+
+    val pillBackground = if (isSelected) {
+        RadiantGold.copy(alpha = 0.20f)
+    } else {
+        Color.Transparent
+    }
+
+    val pillBorder = if (isSelected) {
+        BorderStroke(1.dp, RadiantGold.copy(alpha = 0.45f))
+    } else {
+        null
+    }
 
     Box(
         modifier = modifier
             .weight(1f)
-            .fillMaxHeight()
-            .clip(RoundedCornerShape(14.dp))
+            .clip(RoundedCornerShape(50))
             .clickable(
                 onClick = onClick,
                 interactionSource = remember { MutableInteractionSource() },
                 indication = null
-            ),
+            )
+            .background(pillBackground, shape = RoundedCornerShape(50))
+            .then(
+                if (pillBorder != null) Modifier.border(pillBorder, shape = RoundedCornerShape(50))
+                else Modifier
+            )
+            .padding(vertical = 10.dp),
         contentAlignment = Alignment.Center
     ) {
         Column(
@@ -310,7 +242,7 @@ fun RowScope.FloatingBarItem(
                 imageVector = route.icon,
                 contentDescription = route.title,
                 tint = animatedColor,
-                modifier = Modifier.size(20.dp)
+                modifier = Modifier.size(22.dp)
             )
 
             Spacer(modifier = Modifier.height(3.dp))
@@ -319,7 +251,7 @@ fun RowScope.FloatingBarItem(
                 text = route.title,
                 style = MaterialTheme.typography.labelSmall.copy(
                     fontSize = 10.sp,
-                    fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Medium,
+                    fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
                     letterSpacing = 0.3.sp
                 ),
                 color = animatedColor,
