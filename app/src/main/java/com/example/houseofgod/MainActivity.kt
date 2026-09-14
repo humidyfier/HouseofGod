@@ -153,7 +153,7 @@ fun FloatingGlassBottomBar(
                 this.translationY = translationY
             }
             .navigationBarsPadding()
-            .padding(horizontal = 24.dp, bottom = 24.dp),
+            .padding(start = 24.dp, end = 24.dp, bottom = 24.dp),
         contentAlignment = Alignment.Center
     ) {
         Surface(

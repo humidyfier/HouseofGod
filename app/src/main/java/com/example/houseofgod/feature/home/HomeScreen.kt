@@ -16,11 +16,14 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.FilledTonalButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Surface
@@ -47,6 +50,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import com.example.houseofgod.core.designsystem.DarkElevatedSurface
+import com.example.houseofgod.core.designsystem.DarkSurfaceVariant
 import com.example.houseofgod.core.designsystem.RadiantGold
 import com.example.houseofgod.core.designsystem.RadiantGoldContainer
 import com.example.houseofgod.core.designsystem.RadiantGoldContainerText
