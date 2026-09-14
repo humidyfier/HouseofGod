@@ -6,6 +6,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.CubicBezierEasing
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
@@ -46,8 +47,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.graphics.lerp
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -182,28 +185,43 @@ fun FloatingGlassBottomBar(
                 val pillWidth = tabWidth * 1.10f // Elongated 10% horizontally
                 val pillHorizontalOffset = (pillWidth - tabWidth) / 2f
 
-                // Smooth and noticeable sliding transition across sections (420ms)
+                // Smooth, deliberate and silky sliding transition across sections (580ms)
                 val animatedIndex by animateFloatAsState(
                     targetValue = selectedIndex.toFloat(),
                     animationSpec = tween(
-                        durationMillis = 420,
-                        easing = FastOutSlowInEasing
+                        durationMillis = 580,
+                        easing = CubicBezierEasing(0.25f, 0.1f, 0.25f, 1.0f)
                     ),
                     label = "SlidingYellowPillIndicator"
                 )
 
-                // 1. Sliding yellow button with rounded edges (pill shape), elongated 10% horizontally
+                // 1. Sliding yellow magnifier pill with rounded edges, elongated 10% horizontally
                 Box(
                     modifier = Modifier
                         .offset(x = (tabWidth * animatedIndex) - pillHorizontalOffset)
                         .width(pillWidth)
                         .fillMaxHeight()
                         .background(
-                            color = RadiantGold.copy(alpha = 0.20f),
+                            brush = Brush.verticalGradient(
+                                colors = listOf(
+                                    Color.White.copy(alpha = 0.28f), // Convex lens top reflection highlight
+                                    RadiantGold.copy(alpha = 0.24f), // Warm luminous amber center
+                                    RadiantGold.copy(alpha = 0.14f)  // Soft translucent lower meniscus
+                                )
+                            ),
                             shape = RoundedCornerShape(50)
                         )
                         .border(
-                            border = BorderStroke(1.dp, RadiantGold.copy(alpha = 0.45f)),
+                            border = BorderStroke(
+                                width = 1.dp,
+                                brush = Brush.verticalGradient(
+                                    colors = listOf(
+                                        Color.White.copy(alpha = 0.60f), // Crisp upper refraction rim
+                                        RadiantGold.copy(alpha = 0.48f), // Golden bezel
+                                        RadiantGold.copy(alpha = 0.25f)  // Soft lower rim
+                                    )
+                                )
+                            ),
                             shape = RoundedCornerShape(50)
                         )
                 )
@@ -220,6 +238,8 @@ fun FloatingGlassBottomBar(
                         FloatingBarItem(
                             route = topLevelRoute,
                             isSelected = isSelected,
+                            animatedIndex = animatedIndex,
+                            tabIndex = index,
                             onClick = {
                                 navController.navigate(topLevelRoute.route) {
                                     popUpTo(navController.graph.findStartDestination().id) {
@@ -242,13 +262,24 @@ fun RowScope.FloatingBarItem(
     route: TopLevelRoute,
     isSelected: Boolean,
     onClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    animatedIndex: Float = 0f,
+    tabIndex: Int = 0
 ) {
     val animatedColor by animateColorAsState(
         targetValue = if (isSelected) RadiantGold else TextMediumContrast,
-        animationSpec = tween(300),
+        animationSpec = tween(350),
         label = "BarItemColor"
     )
+
+    // Dynamic magnifier scale: 10-15% enlargement (1.14x) as viewed through the sliding yellow pill
+    val distance = kotlin.math.abs(animatedIndex - tabIndex)
+    val proximity = (1.0f - distance).coerceIn(0f, 1f)
+    val smoothProximity = proximity * proximity * (3f - 2f * proximity) // Smooth Hermite curve
+    val magnifierScale = 1.0f + (smoothProximity * 0.14f) // Up to 14% magnification under the lens
+
+    // Subtle warm illumination as the magnifier lens passes over the item
+    val itemColor = lerp(animatedColor, RadiantGold, smoothProximity * 0.45f)
 
     Box(
         modifier = modifier
@@ -263,13 +294,17 @@ fun RowScope.FloatingBarItem(
         contentAlignment = Alignment.Center
     ) {
         Column(
+            modifier = Modifier.graphicsLayer {
+                scaleX = magnifierScale
+                scaleY = magnifierScale
+            },
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
             Icon(
                 imageVector = route.icon,
                 contentDescription = route.title,
-                tint = animatedColor,
+                tint = itemColor,
                 modifier = Modifier.size(22.dp)
             )
 
@@ -282,7 +317,7 @@ fun RowScope.FloatingBarItem(
                     fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
                     letterSpacing = 0.3.sp
                 ),
-                color = animatedColor,
+                color = itemColor,
                 maxLines = 1
             )
         }
