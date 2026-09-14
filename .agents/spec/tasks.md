@@ -19,7 +19,7 @@
 5. Yield to human for build verification.
 
 ## Task 3: Home Feature - Verse of the Day
-**Status:** TODO
+**Status:** DONE
 **Instructions for Agent:**
 1. Create `feature/home/HomeScreen.kt`.
 2. Build the `VerseOfTheDayCard` Composable. Use a mock image URL with Coil, and apply a `Brush.verticalGradient` (transparent to 80% black) over the image to ensure text contrast.

@@ -9,7 +9,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
+import com.example.houseofgod.feature.home.HomeScreen
 
 /**
  * Main application NavHost coordinating top-level navigation across the 5 core tabs.
@@ -26,7 +26,14 @@ fun AppNavHost(
         modifier = modifier
     ) {
         composable(route = TopLevelRoute.HOME.route) {
-            HomeScreenPlaceholder(modifier = Modifier.fillMaxSize())
+            HomeScreen(
+                modifier = Modifier.fillMaxSize(),
+                onReadChapterClick = {
+                    navController.navigate(TopLevelRoute.BIBLE.route) {
+                        launchSingleTop = true
+                    }
+                }
+            )
         }
         composable(route = TopLevelRoute.BIBLE.route) {
             BibleScreenPlaceholder(modifier = Modifier.fillMaxSize())

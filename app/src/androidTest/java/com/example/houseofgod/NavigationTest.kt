@@ -26,7 +26,7 @@ class NavigationTest {
 
     @Test
     fun startDestination_isHomeScreen() {
-        composeTestRule.onNodeWithText("Home Screen").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Welcome to worship").assertIsDisplayed()
     }
 
     @Test
@@ -54,6 +54,6 @@ class NavigationTest {
         // Navigate back to Home
         composeTestRule.onNodeWithText("Home").performClick()
         composeTestRule.waitForIdle()
-        composeTestRule.onNodeWithText("Home Screen").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Welcome to worship").assertIsDisplayed()
     }
 }
