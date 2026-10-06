@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://www.houseofgod.in/">
-    <img src="https://www.houseofgod.in/wp-content/uploads/logo.png" alt="House of God Logo" width="220">
+    <img src="https://www.houseofgod.in/wp-content/uploads/2026/03/House-of-God-Logo-New.png" alt="House of God Logo" width="220">
   </a>
 </p>
 
