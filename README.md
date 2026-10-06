@@ -3,7 +3,7 @@
     <table>
       <tr>
         <td bgcolor="#FFFFFF" style="padding: 12px; border-radius: 6px;">
-          <img src="https://houseofgod.in" 
+          <img src="https://www.houseofgod.in/wp-content/uploads/2026/03/House-of-God-Logo-New.png" 
                alt="House of God Logo" 
                width="220">
         </td>
@@ -13,6 +13,7 @@
 </div>
 
 <h1 align="center">House of God — Official Mobile Platform</h1>
+
 
 
 
