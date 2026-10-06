@@ -1,10 +1,11 @@
 <p align="center">
   <a href="https://www.houseofgod.in/">
-    <img src="https://houseofgod.in" alt="House of God Logo" width="220">
+    <img src="https://www.houseofgod.in/wp-content/uploads/2026/03/House-of-God-Logo-New.png" alt="House of God Logo" width="220" style="background-color: white; padding: 10px; border-radius: 8px;">
   </a>
 </p>
 
 <h1 align="center">House of God — Official Mobile Platform</h1>
+
 
 
 ## Our Vision
