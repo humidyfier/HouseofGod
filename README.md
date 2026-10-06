@@ -1,6 +1,7 @@
 <p align="center">
   <a href="https://www.houseofgod.in/">
-    <img src="https://www.houseofgod.in/wp-content/uploads/2026/03/House-of-God-Logo-New.png" alt="House of God Logo" width="220" style="background-color: white; padding: 10px; border-radius: 8px;">
+    <!-- The filter below forces black elements in the image to look bright/white -->
+    <img src="https://www.houseofgod.in/wp-content/uploads/2026/03/House-of-God-Logo-New.png" alt="House of God Logo" width="220" style="filter: brightness(0) invert(1);">
   </a>
 </p>
 
