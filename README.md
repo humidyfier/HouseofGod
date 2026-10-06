@@ -1,18 +1,14 @@
-<div align="center">
+<p align="center">
   <a href="https://houseofgod.in">
-    <table>
-      <tr>
-        <td bgcolor="#FFFFFF" style="padding: 12px; border-radius: 6px;">
-          <img src="https://www.houseofgod.in/wp-content/uploads/2026/03/House-of-God-Logo-New.png" 
-               alt="House of God Logo" 
-               width="220">
-        </td>
-      </tr>
-    </table>
+    <img src="https://www.houseofgod.in/wp-content/uploads/2026/03/House-of-God-Logo-New.png" 
+         alt="House of God Logo" 
+         width="220" 
+         style="background-color: #FFFFFF; padding: 12px; border-radius: 6px; display: inline-block;">
   </a>
-</div>
+</p>
 
 <h1 align="center">House of God — Official Mobile Platform</h1>
+
 
 
 
