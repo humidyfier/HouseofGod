@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://houseofgod.in">
-    <img src="https://houseofgod.inwp-content/uploads/2026/03/House-of-God-Logo-New.png" 
+    <img src="https://www.houseofgod.in/wp-content/uploads/2026/03/House-of-God-Logo-New.png" 
          alt="House of God Logo" 
          width="220" 
          style="background-color: #FFFFFF; padding: 12px; border-radius: 6px; display: inline-block;">
@@ -8,6 +8,7 @@
 </p>
 
 <h1 align="center">House of God — Official Mobile Platform</h1>
+
 
 
 
