@@ -14,7 +14,7 @@
 
 
 
-## Our mission and vision
+## Our vision
 
 The House of God mobile application is a dedicated digital sanctuary designed to unify and enrich the spiritual lives of our congregation. In an increasingly distracted world, this platform serves as a centralised anchor for faith, worship, and community engagement. 
 
